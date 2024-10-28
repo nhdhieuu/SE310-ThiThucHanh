@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ThiThucHanh.Models;
+using ThiThucHanh.Models.Authentication;
 using X.PagedList;
 
 namespace ThiThucHanh.Areas.Admin.Controllers
@@ -15,7 +16,8 @@ namespace ThiThucHanh.Areas.Admin.Controllers
 		ShopthuchanhContext db = new ShopthuchanhContext();
 		[Route("")]
 		[Route("index")]
-		public IActionResult Index(int? page)
+        [Authentication]
+        public IActionResult Index(int? page)
 		{
 			int pageSize = 5;
 			int pageNumber = page == null || page < 0 ? 1 : page.Value;

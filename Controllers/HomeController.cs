@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using ThiThucHanh.Models;
+using ThiThucHanh.Models.Authentication;
 using ThiThucHanh.ViewModels;
 using X.PagedList;
 
@@ -16,7 +17,7 @@ namespace ThiThucHanh.Controllers
         {
             _logger = logger;
         }
-
+        [Authentication]
         public IActionResult Index(int? page)
         {
 

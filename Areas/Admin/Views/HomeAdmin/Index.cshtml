@@ -1,0 +1,66 @@
+﻿@* @model IEnumerable<ThiThucHanh.Models.Product>
+ *@
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using X.PagedList.Mvc.Core;
+@using ThiThucHanh.Models
+@model X.PagedList.IPagedList<Product>
+
+
+<p>
+    <a asp-controller="HomeAdmin" asp-action="ThemSanPhamMoi">Tạo sản phẩm mới</a>
+</p>
+<p></p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tên sản phẩm
+            </th>
+            <th>
+                Giá
+            </th>
+            <th>
+                Danh mục sản phẩm
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 0;
+            string @cls = "table-info";
+        }
+@foreach (var item in Model) {
+            i = i + 1;
+            cls = "table-info";
+            if (i % 2 == 0)
+            {
+                cls = "table-warning";
+            }
+        <tr class="@cls">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CategoryId)
+                </td>
+            <td>
+                    <a asp-controller="HomeAdmin" asp-action="SuaSanPhamMoi" asp-route-maSanPham="@item.Id">Edit</a> |
+                    <a asp-controller="HomeAdmin" asp-action="XoaSanPham" asp-route-maSanPham="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("index", new { page = page }),
+                new PagedListRenderOptions
+            {
+                LiElementClasses = new List<String> { "page-item" },
+                PageClasses = new List<String> { "page-link" }
+            })
